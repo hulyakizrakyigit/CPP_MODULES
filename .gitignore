@@ -1,0 +1,8 @@
+# Ignore all object files (.o)
+*.o
+
+# Ignore executable files
+zombieHorde
+
+# Ignore MacOS-specific files
+.DS_Store
