@@ -2,7 +2,11 @@
 
 HumanB::~HumanB(){}
 
-HumanB::HumanB(const std::string& name) : name(name), weapon(NULL){} // Üye Başlatma Listesi ile başlatma
+HumanB::HumanB(const std::string& name)
+{
+	this->name = name;
+	this->weapon = NULL;
+}
 
 void HumanB::setWeapon(Weapon* weapon)
 {
