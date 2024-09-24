@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   HumanB.cpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hkizrak- <hkizrak-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/24 17:03:18 by hkizrak-          #+#    #+#             */
+/*   Updated: 2024/09/24 18:49:20 by hkizrak-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "HumanB.hpp"
 
 HumanB::~HumanB(){}
@@ -10,7 +22,7 @@ HumanB::HumanB(const std::string& name)
 
 void HumanB::setWeapon(Weapon* weapon)
 {
-	this->weapon = weapon; // weapon' referansının adresini 'this->weapon' işaretçisine atar
+	this->weapon = weapon;
 }
 
 void	HumanB::attack()

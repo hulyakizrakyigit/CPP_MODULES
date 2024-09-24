@@ -1,5 +1,15 @@
-//HumanA: constructorında silah alır ve her zaman bir silaha sahip olur. Silahı olmadan var olamaz.
-//HumanB: Silahı olmadan da var olabilir ve silahı sonradan ayarlanabilir.
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hkizrak- <hkizrak-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/24 17:04:01 by hkizrak-          #+#    #+#             */
+/*   Updated: 2024/09/24 18:51:53 by hkizrak-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "HumanA.hpp"
 #include "HumanB.hpp"
 #include "Weapon.hpp"
@@ -24,7 +34,3 @@ int main()
 	}
 	return 0;
 }
-// __attribute ((destructor)) void attackDestructor()
-// {
-// 	system("leaks attack");
-// }
