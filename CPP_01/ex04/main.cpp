@@ -19,7 +19,7 @@ int main(int ac, char *av[])
 	}
 	replacInFile(filename, s1, s2);
 }
-__attribute ((destructor)) void zombieHordeDestructor()
-{
-	system("leaks replace");
-}
+// __attribute ((destructor)) void zombieHordeDestructor()
+// {
+// 	system("leaks replace");
+// }

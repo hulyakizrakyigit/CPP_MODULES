@@ -24,3 +24,7 @@ int main()
 	}
 	return 0;
 }
+// __attribute ((destructor)) void attackDestructor()
+// {
+// 	system("leaks attack");
+// }

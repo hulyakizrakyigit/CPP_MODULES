@@ -15,7 +15,6 @@ class Weapon
 		const std::string& getType();
 		void setType(const std::string& type); // Burada da referans yolladık çünkü stringin kopyasını oluşturmak yerine aynı stringi kullanmak daha mantıklı
 
-
 };
 
 #endif
