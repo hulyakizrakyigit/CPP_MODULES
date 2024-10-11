@@ -10,17 +10,18 @@ Fixed::~Fixed() {
 
 Fixed::Fixed(const int val) {
 	std::cout << "Int constructor called" << std::endl;
-	_val = val << _fractionalBits;
+	this->_val = val << _fractionalBits;
 }
 
 Fixed::Fixed(const float val) {
 	std::cout << "Float constructor called" << std::endl;
-	_val = roundf(val * (1 << _fractionalBits));
+	this->_val = roundf(val * (1 << _fractionalBits));
 }
 
 Fixed::Fixed(const Fixed &other) {
 	std::cout << "Copy constructor called" << std::endl;
-	*this = other;
+	operator=(other);
+	//*this = other;
 }
 
 Fixed &Fixed::operator=(const Fixed &other) {
@@ -52,5 +53,3 @@ std::ostream& operator<<(std::ostream& out, const Fixed& fixed) {
 	out << fixed.toFloat();
 	return out;
 }
-
-
