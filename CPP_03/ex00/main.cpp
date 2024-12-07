@@ -14,5 +14,8 @@ int main() {
     c2.attack("enemy3");
     }
     c2.beRepaired(5);
+    ClapTrap* c3 = new ClapTrap("hulya");
+    c3->attack("enemy4");
+    delete c3;
     return 0;
 }
