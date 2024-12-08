@@ -24,7 +24,6 @@ ScavTrap::ScavTrap(const ScavTrap& other) : ClapTrap(other) {
 
 ScavTrap& ScavTrap::operator=(const ScavTrap& other) {
     if (this != &other) {
-       // ClapTrap::operator=(other);
         name = other.name;
         hitPoints = other.hitPoints;
         energyPoints = other.energyPoints;
@@ -39,7 +38,7 @@ void ScavTrap::attack(const std::string& target) {
         energyPoints--;
         std::cout << "ScavTrap " << name << " attacks " << target << ", causing " << attackDamage << " points of damage!" << std::endl;
     } else {
-        std::cout << "\033[31m" << "ScavTrap " << name << " has no energy or hit points left" << "\033[0m" << std::endl; 
+        std::cout << "\033[31m" << "ScavTrap " << name << " has no energy or hit points left" << "\033[0m" << std::endl;
     }
 }
 
