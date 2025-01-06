@@ -4,7 +4,7 @@ int main() {
     Data *data =  new Data;
     data->name = "Hulya";
     data->id = 42;
-    data->value = 3.14;
+    data->value = 42.42;
 
     std::cout << "Data: " << data << std::endl;
     uintptr_t serialized = Serializer::serialize(data);
