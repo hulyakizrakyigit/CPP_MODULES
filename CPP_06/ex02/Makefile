@@ -2,7 +2,7 @@ CC = c++
 
 FLAGS = -Wall -Wextra -Werror -std=c++98
 
-NAME = casting
+NAME = Casting
 
 SRCS = main.cpp Base.cpp
 
