@@ -3,7 +3,6 @@
 #include "C.hpp"
 #include <ctime>
 #include <cstdlib>
-#include <string>
 
 Base * generate(void) {
     srand(time(NULL));
@@ -36,19 +35,19 @@ void identify(Base* p) {
 void identify(Base& p) {
     std::cout << "Identifying reference: ";
     try {
-        (void)dynamic_cast<A&>(p);
+        dynamic_cast<A&>(p);
         std::cout << "A" << std::endl;
         return;
     } catch (...) {}
 
     try {
-        (void)dynamic_cast<B&>(p);
+        dynamic_cast<B&>(p);
         std::cout << "B" << std::endl;
         return;
     } catch (...) {}
 
     try {
-        (void)dynamic_cast<C&>(p);
+        dynamic_cast<C&>(p);
         std::cout << "C" << std::endl;
         return;
     } catch (...) {}

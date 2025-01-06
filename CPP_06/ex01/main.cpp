@@ -6,6 +6,10 @@ int main() {
     data->id = 42;
     data->value = 42.42;
 
+    std::cout << "Name: " << data->name << std::endl;
+    std::cout << "ID: " << data->id << std::endl;
+    std::cout << "Value: " << data->value << std::endl;
+
     std::cout << "Data: " << data << std::endl;
     uintptr_t serialized = Serializer::serialize(data);
     std::cout << "Serialized: " << serialized << std::endl;
