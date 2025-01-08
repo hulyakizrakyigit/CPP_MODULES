@@ -12,5 +12,10 @@ void iter(T *array, size_t len, F func) {
     }
 }
 
+template <typename T, size_t N>
+size_t arrayLength(T (&)[N]) {
+    return N;
+}
+
 
 #endif

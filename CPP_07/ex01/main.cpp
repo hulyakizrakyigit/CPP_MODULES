@@ -27,24 +27,26 @@ void size(std::string &str) {
 int main()
 {
     int tab[] = {0, 1, 2, 3, 4};
-    ::iter(tab, 5, print<int>);
+    ::iter(tab, arrayLength(tab), print<int>);
     std::cout << std::endl;
-    ::iter(tab, 5, add);
-    ::iter(tab, 5, print<int>);
+    ::iter(tab, arrayLength(tab), add);
+    ::iter(tab, arrayLength(tab), print<int>);
     std::cout << std::endl;
-    ::iter(tab, 5, mul);
-    ::iter(tab, 5, print<int>);
+    ::iter(tab, arrayLength(tab), mul);
+    ::iter(tab, arrayLength(tab), print<int>);
     std::cout << std::endl;
 
     std::string tab2[] = {"one", "two", "three", "four", "five"};
 
-    ::iter(tab2, 5, print<std::string>);
+    ::iter(tab2, arrayLength(tab2), print<std::string>);
     std::cout << std::endl;
-    ::iter(tab2, 5, toUpper);
-    ::iter(tab2, 5, print<std::string>);
+    ::iter(tab2, arrayLength(tab2), toUpper);
+    ::iter(tab2, arrayLength(tab2), print<std::string>);
     std::cout << std::endl;
-    ::iter(tab2, 5, size);
+    ::iter(tab2, arrayLength(tab2), size);
     std::cout << std::endl;
+
+    return 0;
 
     return 0;
 }
