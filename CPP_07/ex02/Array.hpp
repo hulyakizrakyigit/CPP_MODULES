@@ -8,22 +8,24 @@ template <typename T>
 class Array {
     private:
         T* array;
-        unsigned int size;
+        unsigned int n;
     
     public:
-    Array() : array(NULL), size(0) {}
-    Array(unsigned int n) : array(new T[n]), size(n) {}
-    Array(const Array &other) : array(new T[other.size]), size(other.size) {
-        for (unsigned int i = 0; i < size; i++) {
+    Array() : array(NULL), n(0) {}
+    Array(unsigned int n) : array(new T[n]()), n(n) {}
+    Array(const Array &other) : array(new T[other.n]), n(other.n) {
+        //std::cout << "Copy constructor" << std::endl;
+        for (unsigned int i = 0; i < n; i++) {
             array[i] = other.array[i];
         }
     }
     Array &operator=(const Array &other) {
+        //std::cout << "Assignment operator" << std::endl;
         if (this != &other) {
             delete[] array;
-            array = new T[other.size];
-            size = other.size;
-            for (unsigned int i = 0; i < size; i++) {
+            array = new T[other.n];
+            n = other.n;
+            for (unsigned int i = 0; i < n; i++) {
                 array[i] = other.array[i];
             }
         }
@@ -35,11 +37,29 @@ class Array {
     }
 
     T &operator[](unsigned int i) {
-        if (i >= size) {
-            throw std::out_of_range("Index out of range");
+        if (i >= n) {
+            throw InvalidIndexException();
         }
         return array[i];
     }
+
+    const T &operator[](unsigned int i) const {
+        if (i >= n) {
+            throw InvalidIndexException();
+        }
+        return array[i];
+    }
+
+    unsigned int size() const {
+        return n;
+    }
+
+    class InvalidIndexException : public std::exception {
+        public:
+        virtual const char* what() const throw() {
+            return "Invalid index";
+        }
+    };
 };
 
 #endif
