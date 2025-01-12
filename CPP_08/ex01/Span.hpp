@@ -24,15 +24,11 @@ class Span {
     int longestSpan();
 
     class SpanExceptionFull : public std::exception {
-    virtual const char *what() const throw() {
-        return "Container is full";
-    }
+    virtual const char *what() const throw();
     };
 
-class SpanExceptionShort : public std::exception {
-    virtual const char *what() const throw() {
-        return "Container is too short";
-    }
+    class SpanExceptionShort : public std::exception {
+    virtual const char *what() const throw();
     };
 };
 
