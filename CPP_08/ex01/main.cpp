@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <list>
+#include <cstdlib>
 
 int main() {
     try {
@@ -23,7 +24,7 @@ int main() {
         vec.push_back(50);
         vec.push_back(60);
         Span sp2 = Span(10);
-        sp2.addNumbers(vec.begin(), vec.end());
+        sp2.addNumber(vec.begin(), vec.end());
 
         std::cout << "Shortest Span (sp2): " << sp2.shortestSpan() << std::endl;
         std::cout << "Longest Span (sp2): " << sp2.longestSpan() << std::endl;
@@ -51,7 +52,7 @@ int main() {
         lst.push_back(300);
         lst.push_back(400);
         Span sp3 = Span(5);
-        sp3.addNumbers(lst.begin(), lst.end());
+        sp3.addNumber(lst.begin(), lst.end());
 
         std::cout << "Shortest Span (sp3): " << sp3.shortestSpan() << std::endl;
         std::cout << "Longest Span (sp3): " << sp3.longestSpan() << std::endl;
@@ -74,6 +75,14 @@ int main() {
     } catch (const std::exception &e) {
         std::cout << "Exception caught: " << e.what() << std::endl;
     }
+
+    Span sp5 = Span(10000);
+    for (int i = 0; i < 10000; i++) {
+        sp5.addNumber(rand() % 10000);
+    }
+
+    std::cout << "Shortest Span (sp5): " << sp5.shortestSpan() << std::endl;
+    std::cout << "Longest Span (sp5): " << sp5.longestSpan() << std::endl;
 
     return 0;
 }

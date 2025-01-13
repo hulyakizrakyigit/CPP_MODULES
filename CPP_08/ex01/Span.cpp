@@ -1,6 +1,8 @@
 #include "Span.hpp"
 #include <algorithm>
 
+Span::Span() : maxSize(0), numbers(std::vector<int>()){}
+
 Span::Span(unsigned int n) : maxSize(n), numbers(std::vector<int>()){}
 
 Span::Span(const Span &src) : maxSize(src.maxSize), numbers(src.numbers){}

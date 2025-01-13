@@ -13,9 +13,6 @@ int main () {
     mstack.push(737);
     //[...]
     mstack.push(0);
-
-    std::cout << "MutantStack first element: " << mstack.front() << std::endl;
-    std::cout << "MutantStack last element: " << mstack.back() << std::endl;
     
     MutantStack<int>::iterator it = mstack.begin();
     MutantStack<int>::iterator ite = mstack.end();
@@ -39,7 +36,6 @@ int main () {
     std::list<int> lst;
     lst.push_back(5);
     lst.push_back(17);
-    std::cout << "List top element: " << lst.back() << std::endl;
     lst.pop_back();
     std::cout << "List size after pop: " << lst.size() << std::endl;
     lst.push_back(3);

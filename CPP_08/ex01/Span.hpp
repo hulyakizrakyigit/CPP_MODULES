@@ -10,6 +10,7 @@ class Span {
         std::vector<int> numbers;
     
     public:
+    Span();
     Span(unsigned int n);
     Span(const Span &src);
     ~Span();
@@ -18,7 +19,7 @@ class Span {
     void addNumber(int n);
 
     template <typename it>
-    void addNumbers(it begin, it end);
+    void addNumber(it begin, it end);
 
     int shortestSpan();
     int longestSpan();
@@ -33,7 +34,7 @@ class Span {
 };
 
 template <typename it>
-void Span::addNumbers(it begin, it end) {
+void Span::addNumber(it begin, it end) {
     if (numbers.size() + std::distance(begin, end) > maxSize)
         throw SpanExceptionFull();
     numbers.insert(numbers.end(), begin, end);
