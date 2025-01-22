@@ -30,6 +30,9 @@ void BitcoinExchange::loadDatabase(const std::string &filename) {
     if (!std::getline(dbFile, line))
         throw std::runtime_error("Empty file or read error");
     
+    if (line.find("date") == std::string::npos || line.find("exchange_rate") == std::string::npos)
+        throw std::runtime_error("Bad header in csv file");
+    
     while (std::getline(dbFile, line)) {
         if (line.empty())
             continue;
@@ -42,12 +45,12 @@ void BitcoinExchange::loadDatabase(const std::string &filename) {
 
         std::string date = line.substr(0, commaPos);
         if (!isValidDate(date)) {
-            std::cerr << "Error: Bad date format111: " << date << std::endl;
+            std::cerr << "Error: Bad date format: " << date << std::endl;
             continue;
         }
 
         float exchange_rate = std::atof(line.substr(commaPos + 1).c_str());
-        database[date] = exchange_rate;     
+        database[date] = exchange_rate;
     }
     if (database.empty())
             throw std::runtime_error("Empty database");
@@ -67,10 +70,15 @@ void BitcoinExchange::processInput(const std::string &filename) {
         throw std::runtime_error("Could not open file");
 
     std::string line;
-    if (!std::getline(inputFile, line)) //date|value içeriyor mu?
+    if (!std::getline(inputFile, line))
         throw std::runtime_error("Empty file or read error");
+
+    if (line.find("date") == std::string::npos || line.find("value") == std::string::npos)
+        throw std::runtime_error("Bad header");
     
     while (std::getline(inputFile, line)) {
+        if (line.empty())
+            continue;
         std::string date;
         float value;
 
@@ -80,7 +88,7 @@ void BitcoinExchange::processInput(const std::string &filename) {
             continue;
         }
         if (parseResult == 2) {
-            std::cerr << "Error: Bad date format: " << date << std::endl;
+            std::cerr << "Error: Bad date format " << date << std::endl;
             continue;
         }
         if (parseResult == 3) {

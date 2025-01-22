@@ -70,6 +70,9 @@
 		"random": "cpp",
 		"fstream": "cpp",
 		"ranges": "cpp",
-		"numbers": "cpp"
+		"numbers": "cpp",
+		"list": "cpp",
+		"map": "cpp",
+		"set": "cpp"
 	}
 }
