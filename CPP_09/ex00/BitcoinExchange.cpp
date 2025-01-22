@@ -1,5 +1,9 @@
 #include "BitcoinExchange.hpp"
 #include <fstream>
+#include <string>
+#include <cstdlib>
+#include <algorithm>
+#include <cctype>
 
 BitcoinExchange::BitcoinExchange() {}
 
@@ -27,20 +31,27 @@ void BitcoinExchange::loadDatabase(const std::string &filename) {
         throw std::runtime_error("Empty file or read error");
     
     while (std::getline(dbFile, line)) {
+        if (line.empty())
+            continue;
+        
         size_t commaPos = line.find(',');
-        if (commaPos == std::string::npos)
-            throw std::runtime_error("Bad line format");
-        std::string date = line.substr(0, commaPos);
-        try {
-            float exchange_rate = std::stof(line.substr(commaPos + 1));
-            database[date] = exchange_rate;
-        } catch (std::exception &e) {
-            throw std::runtime_error("Invalid line format");
+        if (commaPos == std::string::npos) {
+            std::cerr << "Error: Bad line format: " << line << std::endl;
+            continue;
         }
 
-        if (database.empty())
-            throw std::runtime_error("Empty database");
+        std::string date = line.substr(0, commaPos);
+        if (!isValidDate(date)) {
+            std::cerr << "Error: Bad date format111: " << date << std::endl;
+            continue;
+        }
+
+        float exchange_rate = std::atof(line.substr(commaPos + 1).c_str());
+        database[date] = exchange_rate;     
     }
+    if (database.empty())
+            throw std::runtime_error("Empty database");
+
     dbFile.close();
 
     //hatalı tarih?
@@ -63,12 +74,26 @@ void BitcoinExchange::processInput(const std::string &filename) {
         std::string date;
         float value;
 
-        if (!parseLine(line, date, value)) {
-            if (line.find('|') != std::string::npos)
-                throw std::runtime_error("Error: not a positive number");
-            else
-                std::cerr << "Error: bad input => " << line <<std::endl;
-        continue;
+        int parseResult = parseLine(line, date, value);
+        if (parseResult == 1) {
+            std::cerr << "Error: bad input => " << date << std::endl;
+            continue;
+        }
+        if (parseResult == 2) {
+            std::cerr << "Error: Bad date format: " << date << std::endl;
+            continue;
+        }
+        if (parseResult == 3) {
+            std::cerr << "Error: Bad value format: " << line << std::endl;
+            continue;
+        }
+        if (parseResult == 4) {
+            std::cerr << "Error: not a positive number."<< std::endl;
+            continue;
+        }
+        if (parseResult == 5) {
+            std::cerr << "Error: too large a number."<< std::endl;
+            continue;
         }
 
         std::string closestDate = findClosestDate(date);
@@ -83,34 +108,42 @@ void BitcoinExchange::processInput(const std::string &filename) {
     inputFile.close();
 }
 
-bool BitcoinExchange::parseLine(const std::string &line, std::string &date, float &value) {
+int BitcoinExchange::parseLine(const std::string &line, std::string &date, float &value) {
     size_t delimiterPos = line.find('|');
-    if (delimiterPos == std::string::npos)
-        return false;
+
     date = line.substr(0, delimiterPos);
     std::string valueStr = line.substr(delimiterPos + 1);
 
-    if (date.empty() || valueStr.empty())
-        return false; //control
+        if (delimiterPos == std::string::npos)
+        return 1;
+
+    if (!isValidDate(date)) 
+        return 2;
+
+    value = std::atof(valueStr.c_str());
+    if (value == 0 && valueStr != "0" && valueStr != "0.0") 
+        return 3;
+
+    if (value < 0)
+        return 4;
     
-    if (isValidDate(date)) 
-        return false;
+    if (value > 1000)
+        return 5;
 
-    try {
-        value = std::stof(valueStr);
-    } catch (...) {
-        return false;
-    }
-
-    if (value < 0 || value > 100000)
-        return false;
-
-    return true;
+    return 0;
 //boşluk var mı?
 //boş satır var mı?
 }
 
-bool isValidDate(const std::string &date) {
+struct IsSpace {
+    bool operator()(char c) const {
+        return std::isspace(static_cast<unsigned char>(c));
+    }
+};
+
+bool BitcoinExchange::isValidDate(std::string &date) {
+    date.erase(std::remove_if(date.begin(), date.end(), IsSpace()), date.end());
+
     if (date.size() != 10)
         return false;
     if (date[4] != '-' || date[7] != '-')
@@ -121,6 +154,11 @@ bool isValidDate(const std::string &date) {
         if (!std::isdigit(date[i]))
             return false;
     }
+
+    int month = std::atoi(date.substr(5, 2).c_str());
+    int day = std::atoi(date.substr(8, 2).c_str());
+    if (month < 1 || month > 12 || day < 1 || day > 31)
+        return false;
     return true;
 }
 

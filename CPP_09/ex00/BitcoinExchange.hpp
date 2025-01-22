@@ -16,8 +16,8 @@ class BitcoinExchange {
 
     void loadDatabase(const std::string &filename);
     void processInput(const std::string &filename);
-    bool parseLine(const std::string &line, std::string &date, float &value);
-    bool isValidDate(const std::string &date);
+    int parseLine(const std::string &line, std::string &date, float &value);
+    bool isValidDate(std::string &date);
     std::string findClosestDate(const std::string &date);
 };
 
