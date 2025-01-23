@@ -14,7 +14,8 @@ class RPN {
     RPN &operator=(const RPN &other);
     ~RPN();
 
-    int evaluate(const std::string &expression);
+    int evaluate(std::string &expression);
+    bool isOperator(char c);
 };
 
 

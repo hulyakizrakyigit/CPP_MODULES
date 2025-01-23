@@ -1,4 +1,4 @@
-#include "RNP.hpp"
+#include "RPN.hpp"
 
 RPN::RPN() {}
 
@@ -15,51 +15,47 @@ RPN &RPN::operator=(const RPN &other) {
 
 RPN::~RPN() {}
 
-int RPN::evaluate(const std::string &expression) {
-    std::string::const_iterator it = expression.begin();
-    while (it != expression.end()) {
-        if (std::isdigit(*it)) {
-            stack.push(*it - '0');
-        } else if (*it == '+') {
+int RPN::evaluate(std::string &expression) {
+    for (size_t i = 0; i < expression.length(); i++) {
+        char c = expression[i];
+        if (c == ' ')
+            continue;
+        if (std::isdigit(c))
+            stack.push(c - '0');
+        else if (isOperator(c)) {
             if (stack.size() < 2)
-                throw std::runtime_error("Error: not enough operands");
+                throw std::runtime_error("Invalid expression");
+            
             int a = stack.top();
             stack.pop();
             int b = stack.top();
             stack.pop();
-            stack.push(a + b);
-        } else if (*it == '-') {
-            if (stack.size() < 2)
-                throw std::runtime_error("Error: not enough operands");
-            int a = stack.top();
-            stack.pop();
-            int b = stack.top();
-            stack.pop();
-            stack.push(b - a);
-        } else if (*it == '*') {
-            if (stack.size() < 2)
-                throw std::runtime_error("Error: not enough operands");
-            int a = stack.top();
-            stack.pop();
-            int b = stack.top();
-            stack.pop();
-            stack.push(a * b);
-        } else if (*it == '/') {
-            if (stack.size() < 2)
-                throw std::runtime_error("Error: not enough operands");
-            int a = stack.top();
-            stack.pop();
-            int b = stack.top();
-            stack.pop();
-            if (a == 0)
-                throw std::runtime_error("Error: division by zero");
-            stack.push(b / a);
-        } else if (!std::isspace(*it)) {
-            throw std::runtime_error("Error");
+            if (c == '/' && a == 0)
+                throw std::runtime_error("Division by zero");
+            switch (c) {
+                case '+':
+                    stack.push(a + b);
+                    break;
+                case '-':
+                    stack.push(b - a);
+                    break;
+                case '*':
+                    stack.push(a * b);
+                    break;
+                case '/':
+                    stack.push(b / a);
+                    break;
+            }
+        } else {
+            throw std::runtime_error("Invalid character in expression");
         }
-        ++it;
     }
     if (stack.size() != 1)
-        throw std::runtime_error("Error");
-    return stack.top();
+        throw std::runtime_error("Invalid expression");
+
+    return stack.top();  
+}
+
+bool RPN::isOperator(char c) {
+    return c == '+' || c == '-' || c == '*' || c == '/';
 }
