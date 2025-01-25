@@ -24,14 +24,14 @@ int RPN::evaluate(std::string &expression) {
             stack.push(c - '0');
         else if (isOperator(c)) {
             if (stack.size() < 2)
-                throw std::runtime_error("Invalid expression");
+                throw std::runtime_error("ERROR: Invalid expression");
             
             int a = stack.top();
             stack.pop();
             int b = stack.top();
             stack.pop();
             if (c == '/' && a == 0)
-                throw std::runtime_error("Division by zero");
+                throw std::runtime_error("ERROR: Division by zero");
             switch (c) {
                 case '+':
                     stack.push(a + b);
@@ -47,11 +47,11 @@ int RPN::evaluate(std::string &expression) {
                     break;
             }
         } else {
-            throw std::runtime_error("Invalid character in expression");
+            throw std::runtime_error("ERROR: Invalid character in expression");
         }
     }
     if (stack.size() != 1)
-        throw std::runtime_error("Invalid expression");
+        throw std::runtime_error("ERROR: Invalid expression");
 
     return stack.top();  
 }
