@@ -1,22 +1,32 @@
 #ifndef PMERGEME_HPP
 #define PMERGEME_HPP
 
-#include <iostream>
-#include <deque>
 #include <vector>
+#include <deque>
+#include <iostream>
+#include <ctime>
+#include <iomanip>
+#include <string>
+#include <algorithm>
+#include <utility>
 
 class PmergeMe {
-    public:
+private:
+    std::vector<int> vector;
+    std::deque<int> deque;
+    
+    void mergeInsertSortVector(std::vector<int>& v);
+    void mergeInsertSortDeque(std::deque<int>& d);
+    std::vector<int> generateJacobsthalNumbers(int n);
+
+public:
     PmergeMe();
-    PmergeMe(const PmergeMe &other);
-    PmergeMe &operator=(const PmergeMe &other);
+    PmergeMe(const PmergeMe& other);
+    PmergeMe& operator=(const PmergeMe& other);
     ~PmergeMe();
 
-
-    void sortAndPrint(const std::vector<int> &v);
-    void sortAndPrint(const std::deque<int> &d);
-
+    bool processInput(int argc, char** argv);
+    void sortAndDisplay();
 };
-
 
 #endif
