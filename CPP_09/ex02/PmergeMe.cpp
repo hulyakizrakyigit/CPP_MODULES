@@ -33,7 +33,6 @@ bool PmergeMe::processInput(int argc, char** argv) {
             std::cerr << "Error" << std::endl;
             return false;
         }
-        // single number?
         
         vector.push_back(static_cast<int>(num));
         deque.push_back(static_cast<int>(num));
@@ -63,7 +62,6 @@ std::vector<int> PmergeMe::generateJacobsthalNumbers(int n) {
 void PmergeMe::mergeInsertSortVector(std::vector<int>& arr) {
     if (arr.size() <= 1) return;
 
-    // 1. Çiftleri oluştur ve sırala
     std::vector<std::pair<int, int> > pairs;
     for (size_t i = 0; i < arr.size() - 1; i += 2) {
         if (arr[i] > arr[i + 1])
@@ -72,12 +70,10 @@ void PmergeMe::mergeInsertSortVector(std::vector<int>& arr) {
             pairs.push_back(std::make_pair(arr[i + 1], arr[i]));
     }
 
-    // Tek eleman kalırsa
     int lastElement = -1;
     if (arr.size() % 2)
         lastElement = arr[arr.size() - 1];
 
-    // 2. Çiftleri büyük elemana göre sırala
     for (size_t i = 1; i < pairs.size(); i++) {
         std::pair<int, int> key = pairs[i];
         int j = i - 1;
@@ -88,7 +84,6 @@ void PmergeMe::mergeInsertSortVector(std::vector<int>& arr) {
         pairs[j + 1] = key;
     }
 
-    // 3. Ana zinciri oluştur
     std::vector<int> mainChain;
     std::vector<int> pend;
     for (size_t i = 0; i < pairs.size(); i++) {
@@ -96,11 +91,9 @@ void PmergeMe::mergeInsertSortVector(std::vector<int>& arr) {
         pend.push_back(pairs[i].second);
     }
 
-    // 4. İlk elemanı ekle
     mainChain.insert(mainChain.begin(), pend[0]);
     pend.erase(pend.begin());
 
-    // 5. Jacobsthal sayılarını kullanarak insertion
     std::vector<int> jacobsthal = generateJacobsthalNumbers(pend.size() + 1);
     std::vector<bool> inserted(pend.size(), false);
     
@@ -118,7 +111,6 @@ void PmergeMe::mergeInsertSortVector(std::vector<int>& arr) {
         }
     }
 
-    // Kalan elemanları ekle
     for (size_t i = 0; i < inserted.size(); i++) {
         if (!inserted[i]) {
             int elem = pend[i];
@@ -128,7 +120,6 @@ void PmergeMe::mergeInsertSortVector(std::vector<int>& arr) {
         }
     }
 
-    // Son tek elemanı ekle (varsa)
     if (lastElement != -1) {
         std::vector<int>::iterator insertPos = 
             std::lower_bound(mainChain.begin(), mainChain.end(), lastElement);
@@ -141,7 +132,6 @@ void PmergeMe::mergeInsertSortVector(std::vector<int>& arr) {
 void PmergeMe::mergeInsertSortDeque(std::deque<int>& arr) {
     if (arr.size() <= 1) return;
 
-    // 1. Çiftleri oluştur ve sırala
     std::deque<std::pair<int, int> > pairs;
     for (size_t i = 0; i < arr.size() - 1; i += 2) {
         if (arr[i] > arr[i + 1])
@@ -150,12 +140,10 @@ void PmergeMe::mergeInsertSortDeque(std::deque<int>& arr) {
             pairs.push_back(std::make_pair(arr[i + 1], arr[i]));
     }
 
-    // Tek eleman kalırsa
     int lastElement = -1;
     if (arr.size() % 2)
         lastElement = arr[arr.size() - 1];
 
-    // 2. Çiftleri büyük elemana göre sırala
     for (size_t i = 1; i < pairs.size(); i++) {
         std::pair<int, int> key = pairs[i];
         int j = i - 1;
@@ -166,7 +154,6 @@ void PmergeMe::mergeInsertSortDeque(std::deque<int>& arr) {
         pairs[j + 1] = key;
     }
 
-    // 3. Ana zinciri oluştur
     std::deque<int> mainChain;
     std::deque<int> pend;
     for (size_t i = 0; i < pairs.size(); i++) {
@@ -174,11 +161,9 @@ void PmergeMe::mergeInsertSortDeque(std::deque<int>& arr) {
         pend.push_back(pairs[i].second);
     }
 
-    // 4. İlk elemanı ekle
     mainChain.push_front(pend.front());
     pend.pop_front();
 
-    // 5. Jacobsthal sayılarını kullanarak insertion
     std::vector<int> jacobsthal = generateJacobsthalNumbers(pend.size() + 1);
     std::vector<bool> inserted(pend.size(), false);
     
@@ -196,7 +181,6 @@ void PmergeMe::mergeInsertSortDeque(std::deque<int>& arr) {
         }
     }
 
-    // Kalan elemanları ekle
     for (size_t i = 0; i < inserted.size(); i++) {
         if (!inserted[i]) {
             int elem = pend[i];
@@ -206,7 +190,6 @@ void PmergeMe::mergeInsertSortDeque(std::deque<int>& arr) {
         }
     }
 
-    // Son tek elemanı ekle (varsa)
     if (lastElement != -1) {
         std::deque<int>::iterator insertPos = 
             std::lower_bound(mainChain.begin(), mainChain.end(), lastElement);
